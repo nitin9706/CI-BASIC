@@ -1,0 +1,30 @@
+# WRITING CI FOR THIS APP
+name: CI FOR NODE
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+
+      - name: node setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: installing dependency and starting the server
+        run: |
+          npm ci
+          npm run lint
+          npm test
+
+      - name: build images
+        run: docker build -t express-app:ci .
