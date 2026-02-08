@@ -23,7 +23,7 @@ jobs:
       - name: installing dependency and starting the server
         run: |
           npm install
-          npm install eslint .
+          npx eslint .
           npm run lint
           npm test
 
